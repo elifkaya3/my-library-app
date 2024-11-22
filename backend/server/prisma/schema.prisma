@@ -1,0 +1,42 @@
+model User {
+  id               Int              @id @default(autoincrement())
+  name             String
+  currentBorrowing CurrentBorrowing[]
+  borrowHistory    BorrowHistory[]
+}
+
+model Book {
+  id              Int              @id @default(autoincrement())
+  name            String
+  author          String
+  year            Int
+  currentBorrowing CurrentBorrowing[]
+  borrowHistory   BorrowHistory[]
+}
+
+model BorrowHistory {
+  id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+  book      Book   @relation(fields: [bookId], references: [id])
+  bookId    Int
+  userScore Int    // Rating given by the user
+  returned  Boolean @default(false)
+}
+
+model CurrentBorrowing {
+  id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+  book      Book   @relation(fields: [bookId], references: [id])
+  bookId    Int
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}

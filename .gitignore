@@ -1,0 +1,10 @@
+# Node.js
+backend/server/node_modules/
+frontend/my-app/node_modules/
+backend/server/.env
+frontend/my-app/.env
+
+# Build ve log dosyaları
+dist/
+build/
+*.log
